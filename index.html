@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI World Generator</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+    <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+      }
+    }
+    </script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1>🌍 World Generator</h1>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <button class="nav-item active" data-view="create">
+                    <span class="icon">✨</span>
+                    <span>Create World</span>
+                </button>
+                <button class="nav-item" data-view="explore">
+                    <span class="icon">🎮</span>
+                    <span>Explore</span>
+                </button>
+                <button class="nav-item" data-view="worlds">
+                    <span class="icon">🗺️</span>
+                    <span>My Worlds</span>
+                </button>
+            </nav>
+
+            <!-- World Info Panel (shown during explore) -->
+            <div id="world-info" class="world-info" style="display: none;">
+                <h3>Current World</h3>
+                <div id="world-details"></div>
+                
+                <h3 style="margin-top: 20px;">Characters</h3>
+                <div id="character-list"></div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Create World View -->
+            <div class="view active" id="create-view">
+                <div class="view-header">
+                    <h2>Generate Your World</h2>
+                </div>
+
+                <div class="world-creator">
+                    <div class="creator-section">
+                        <label>World Description</label>
+                        <textarea id="world-prompt" placeholder="Describe the world you want to create... (e.g., 'A mystical forest with ancient ruins and magical creatures' or 'A cyberpunk city with neon lights and AI merchants')"></textarea>
+                        <button class="btn btn-primary" id="generate-world">✨ Generate World</button>
+                    </div>
+
+                    <div class="creator-section" id="world-preview" style="display: none;">
+                        <h3>World Preview</h3>
+                        <div id="generated-world-info" class="generated-info"></div>
+                        
+                        <h3 style="margin-top: 24px;">Characters</h3>
+                        <div id="generated-characters" class="characters-grid"></div>
+
+                        <div class="action-buttons">
+                            <button class="btn btn-secondary" id="regenerate-world">🔄 Regenerate</button>
+                            <button class="btn btn-primary" id="save-world">💾 Save & Explore</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Explore View (3D World) -->
+            <div class="view" id="explore-view">
+                <div id="game-canvas"></div>
+                
+                <!-- Game HUD -->
+                <div class="game-hud">
+                    <div class="hud-controls">
+                        <span>WASD to move • Click characters to talk • ESC to exit</span>
+                    </div>
+                </div>
+
+                <!-- Dialogue Box -->
+                <div id="dialogue-box" class="dialogue-box" style="display: none;">
+                    <div class="dialogue-character">
+                        <img id="dialogue-avatar" src="" alt="">
+                        <span id="dialogue-name"></span>
+                    </div>
+                    <div id="dialogue-text" class="dialogue-text"></div>
+                    <div class="dialogue-options" id="dialogue-options"></div>
+                </div>
+            </div>
+
+            <!-- My Worlds View -->
+            <div class="view" id="worlds-view">
+                <div class="view-header">
+                    <h2>Your Worlds</h2>
+                </div>
+
+                <div class="worlds-grid" id="worlds-grid">
+                    <p class="empty-state">No worlds yet. Create your first AI-generated world!</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay" style="display: none;">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <p id="loading-text">Generating world...</p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/websim-socket@latest/dist/websim.min.js"></script>
+    <script type="module" src="agent-builder.js"></script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"4c6229722a6346bc8eb5cb0e5eae5d41","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+</html>
